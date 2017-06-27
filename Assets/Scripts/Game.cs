@@ -25,7 +25,7 @@ public class Game : MonoBehaviour {
     void Start ()
     {
         //Instantiate player
-        Instantiate(playerPrefab, new Vector3(0, -0.4f, 2), transform.rotation);     
+        Instantiate(playerPrefab, new Vector3(0, -0.4f, 2), Quaternion.identity);     
     }
 
 	void Update ()
