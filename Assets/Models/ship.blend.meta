@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 8b054d1ea50506d4c9fff45da2861c69
-timeCreated: 1497049852
+guid: 534dd95d97599ee4aa73a11c53291e21
+timeCreated: 1498573564
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
@@ -9,7 +9,8 @@ ModelImporter:
     400000: //RootNode
     2300000: //RootNode
     3300000: //RootNode
-    4300000: Sphere
+    4300000: Ship1
+    4300002: Ship
     7400000: Default Take
     9500000: //RootNode
   materials:
@@ -55,7 +56,7 @@ ModelImporter:
     normalSmoothAngle: 60
     normalImportMode: 0
     tangentImportMode: 3
-  importAnimation: 1
+  importAnimation: 0
   copyAvatar: 0
   humanDescription:
     serializedVersion: 2
@@ -74,7 +75,7 @@ ModelImporter:
     hasExtraRoot: 0
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 2
+  animationType: 0
   humanoidOversampling: 1
   additionalBone: 0
   userData: 

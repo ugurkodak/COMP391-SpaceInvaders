@@ -4,61 +4,45 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public float speed = 4f;
-
+    Rigidbody rBody;
     public Transform bulletPrefab;
-    Transform bullet;
-    bool bulletActive = false;
-    float bulletTimer = 2f;
+    public float power = 0.05f;
 
 	void Start ()
     {
+        rBody = GetComponent<Rigidbody>();
+    }
 
-	}
-	
-	void Update ()
+    void FixedUpdate()
     {
         //Movement input
         if (Input.GetKey(KeyCode.RightArrow))
         {
-            transform.Translate(speed * Time.deltaTime, 0, 0);
+            rBody.velocity += transform.right * power;
         }
         if (Input.GetKey(KeyCode.LeftArrow))
         {
-            transform.Translate(-speed * Time.deltaTime, 0, 0);
+            rBody.velocity += -transform.right * power;
         }
         //Shooting
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            bulletActive = true;
+            Instantiate(bulletPrefab, transform.position + Vector3.forward * 0.1f, Quaternion.identity);
         }
-        if (bulletActive)
-        {
-            if (bulletTimer >= 2f)
-            {
-                bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
-                Debug.Log("PLAYER: " + transform.position);
-                Debug.Log("Bullet: " + bullet.position);
-
-            }
-            bullet.Translate(0, Time.deltaTime * 2f, 0);
-            bulletTimer -= Time.deltaTime;
-            if (bulletTimer <= 0)
-            {
-                bulletActive = false;
-                bulletTimer = 2f;
-                Destroy(bullet.gameObject);
-            }
-        }
-
+    }
+	
+	void Update ()
+    {
         //Player boundaries
-        if (transform.position.x > 2f)
+        if (transform.position.x > 0.8f)
         {
-            transform.position = new Vector3(2f, transform.position.y, transform.position.z);
+            transform.position = new Vector3(0.8f, transform.position.y, transform.position.z);
+            rBody.velocity = Vector3.zero;
         }
-        if (transform.position.x < -2f)
+        if (transform.position.x < -0.8f)
         {
-            transform.position = new Vector3(-2f, transform.position.y, transform.position.z);
+            transform.position = new Vector3(-0.8f, transform.position.y, transform.position.z);
+            rBody.velocity = Vector3.zero;
         }
     }
 }
