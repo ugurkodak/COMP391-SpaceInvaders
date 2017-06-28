@@ -20,6 +20,7 @@ public class Alien : MonoBehaviour
         if (other.tag == "Bullet")
         {
             Destroy(gameObject);
+            
         }
     }
 
