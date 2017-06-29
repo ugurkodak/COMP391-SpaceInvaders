@@ -33,7 +33,6 @@ public class Alien : MonoBehaviour
         }
         yield return null;
         transform.position = new Vector3(transform.position.x, 0f, transform.position.z);
-        print("Took position");
     }
 
     IEnumerator moveToPlayerBase()
