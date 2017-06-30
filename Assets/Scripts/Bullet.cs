@@ -6,22 +6,22 @@ public class Bullet : MonoBehaviour
 {
     Rigidbody rBody;
 
-    public float speed = 1f;
+    public float speed = 50f;
     public float lifetime = 2f;
 
-    void Start ()
+    void Awake()
     {
         rBody = GetComponent<Rigidbody>();
-	}
+    }
+
+    void Start()
+    {
+        rBody.AddForce(transform.forward * speed);
+    }
 
     void FixedUpdate()
     {
-        rBody.velocity = transform.forward * speed;
         Destroy(gameObject, lifetime);
-    }
-
-    void Update()
-    {
     }
 
     void OnTriggerEnter()

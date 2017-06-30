@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    Rigidbody rBody;
     public Transform bulletPrefab;
+
+    Rigidbody rBody;
     public float power = 0.05f;
 
-	void Start ()
+    void Awake()
     {
         rBody = GetComponent<Rigidbody>();
     }
@@ -24,15 +25,15 @@ public class Player : MonoBehaviour
         {
             rBody.velocity += -transform.right * power;
         }
+    }
+	
+	void Update ()
+    {
         //Shooting
         if (Input.GetKeyDown(KeyCode.Space))
         {
             Instantiate(bulletPrefab, transform.position + Vector3.forward * 0.1f, Quaternion.identity);
         }
-    }
-	
-	void Update ()
-    {
         //Player boundaries
         if (transform.position.x > 0.8f)
         {
@@ -43,6 +44,14 @@ public class Player : MonoBehaviour
         {
             transform.position = new Vector3(-0.8f, transform.position.y, transform.position.z);
             rBody.velocity = Vector3.zero;
+        }
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Bullet")
+        {
+            print("Game Over");
         }
     }
 }
