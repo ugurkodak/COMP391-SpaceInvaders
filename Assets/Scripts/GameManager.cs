@@ -53,7 +53,7 @@ public class GameManager : MonoBehaviour
 	    Time.timeScale = 0;
 	    // batchActive = false;
 	    // aliens.Clear();
-	    textInstructions.text = "GAME OVER\nPRESS SPACE TO RESTART ";
+	    textInstructions.text = "GAME OVER\nPress SPACE to RESTART\nPress ESCAPE to QUIT";
 	}
     }
 

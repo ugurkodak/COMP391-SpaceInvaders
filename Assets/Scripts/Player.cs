@@ -45,6 +45,10 @@ public class Player : MonoBehaviour
 	    
             Instantiate(bulletPrefab, transform.position + Vector3.forward * 0.1f, Quaternion.identity);
         }
+	if (Input.GetKeyDown(KeyCode.Escape))
+	{
+	    Application.Quit();
+	}
         //Player boundaries
         if (transform.position.x > 0.8f)
         {
