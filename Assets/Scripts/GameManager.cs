@@ -19,7 +19,6 @@ public class GameManager : MonoBehaviour
 
     void Awake()
     {
-	print(Time.timeScale);
         Instantiate(playerPrefab, new Vector3(0, 0, -0.5f), Quaternion.identity);
         mainCamera = transform.Find("Main Camera").GetComponent<Camera>();
         background = mainCamera.transform.Find("Space Background").GetComponent<MeshRenderer>().material;
@@ -36,7 +35,6 @@ public class GameManager : MonoBehaviour
 	    //Level 1
 	    if (!batchActive)
 	    {
-		Player.score = 0;
 		textInstructions.text = "";
 		StartCoroutine(sendAliens());
 		batchActive = true;

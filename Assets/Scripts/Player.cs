@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -35,8 +36,9 @@ public class Player : MonoBehaviour
         {
 	    if (GameManager.state == 2)
 	    {
+		score = 0;
 		Time.timeScale = 1;
-		Application.LoadLevel(0);
+		SceneManager.LoadScene("Game");
 	    }
 	    //Start level 1
 	    GameManager.state = 1;
