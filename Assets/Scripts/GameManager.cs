@@ -1,43 +1,62 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
     public Transform playerPrefab;
     public Transform alienPrefab;
+    public static int state = 0; //0(Init), 1(Run), 2(Game Over)
 
+    Transform canvas;
+    Text textInstructions;
+    Text textScore;
     Camera mainCamera;
-    //AudioSource aSource;
     Material background;
-
-    public int score = 0;
-    public List<Transform> aliens = new List<Transform>();
+    List<Transform> aliens = new List<Transform>();
     bool batchActive = false;
 
     void Awake()
     {
+	print(Time.timeScale);
         Instantiate(playerPrefab, new Vector3(0, 0, -0.5f), Quaternion.identity);
         mainCamera = transform.Find("Main Camera").GetComponent<Camera>();
         background = mainCamera.transform.Find("Space Background").GetComponent<MeshRenderer>().material;
+	canvas = transform.Find("Canvas");
+	textInstructions = canvas.transform.Find("textInstructions").GetComponent<Text>();
+	textScore = canvas.transform.Find("textScore").GetComponent<Text>();
         StartCoroutine(moveBackground());
-        //aSource = GetComponent<AudioSource>();
     }
 
     void Update ()
     {
-        //Level 1
-        if (!batchActive && score < 100)
-        {
-            StartCoroutine(sendAliens());
-            batchActive = true;
-        }
-        if (aliens.Count <= 0)
-        {
-            batchActive = false;
-        }
+	if (state == 1)
+	{ 
+	    //Level 1
+	    if (!batchActive)
+	    {
+		Player.score = 0;
+		textInstructions.text = "";
+		StartCoroutine(sendAliens());
+		batchActive = true;
+	    }
 
-        aliens.RemoveAll(alien => alien == null);
+	    if (aliens.Count <= 0)
+	    {
+		batchActive = false;
+	    }
+	    aliens.RemoveAll(alien => alien == null);
+
+	    textScore.text = "SCORE: " + Player.score;   
+	}
+	else if (state == 2)
+	{   
+	    Time.timeScale = 0;
+	    // batchActive = false;
+	    // aliens.Clear();
+	    textInstructions.text = "GAME OVER\nPRESS SPACE TO RESTART ";
+	}
     }
 
     IEnumerator sendAliens()
@@ -47,7 +66,7 @@ public class GameManager : MonoBehaviour
         {
             for (int j = 0; j < 8; j++)
             {
-                aliens.Add(Instantiate(alienPrefab, new Vector3(-0.7f + j * 0.15f, -2f, 0.3f + i * 0.1f), Quaternion.identity));
+                aliens.Add(Instantiate(alienPrefab, new Vector3(-0.9f + j * 0.2f, -2f, 0.3f + i * 0.1f), Quaternion.identity));
             }
             yield return new WaitForSeconds(0.5f);
         }

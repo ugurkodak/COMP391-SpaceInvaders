@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class Alien : MonoBehaviour
 {
-    public Transform bulletPrefab;
-
     Rigidbody rBody;
+    
+    public Transform bulletPrefab;
     public float power = 0.05f;
-
+    
     Transform player;
 
     void Awake()
@@ -28,6 +28,7 @@ public class Alien : MonoBehaviour
     {
         if (other.tag == "Bullet")
         {
+	    Player.score++;
             Destroy(gameObject);
         }
     }
@@ -39,7 +40,6 @@ public class Alien : MonoBehaviour
             transform.position = transform.position + transform.up * 0.1f * Mathf.Abs(transform.position.y); 
             yield return null;
         }
-        yield return null;
         transform.position = new Vector3(transform.position.x, 0f, transform.position.z);
     }
 
@@ -57,19 +57,19 @@ public class Alien : MonoBehaviour
 
     IEnumerator shootBullets()
     {
+	yield return new WaitForSeconds(2);
         while (true)
-        {
-            yield return new WaitForSeconds(1);
+        {  
             transform.LookAt(player.position);
             RaycastHit hit;
-            //TODO: This doesn't work correctly most of the time but is doing what I want to do.
-            if (Physics.Raycast(transform.position, player.position, out hit))
+            if (Physics.Raycast(transform.position, transform.forward, out hit))
             {
                 if (hit.collider.gameObject == player.gameObject)
                 {
                     Instantiate(bulletPrefab, transform.position + transform.forward * 0.08f, Quaternion.identity).LookAt(player.position);
                 }
             }
+	    yield return new WaitForSeconds(1);
         }
     }
 }

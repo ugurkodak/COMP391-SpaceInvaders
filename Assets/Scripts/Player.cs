@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public Transform bulletPrefab;
-
-    Rigidbody rBody;
+    public Transform bulletPrefab;  
     public float power = 0.05f;
+    public static int score = 0;
+    
+    Rigidbody rBody;
 
     void Awake()
     {
@@ -32,6 +33,14 @@ public class Player : MonoBehaviour
         //Shooting
         if (Input.GetKeyDown(KeyCode.Space))
         {
+	    if (GameManager.state == 2)
+	    {
+		Time.timeScale = 1;
+		Application.LoadLevel(0);
+	    }
+	    //Start level 1
+	    GameManager.state = 1;
+	    
             Instantiate(bulletPrefab, transform.position + Vector3.forward * 0.1f, Quaternion.identity);
         }
         //Player boundaries
@@ -51,7 +60,7 @@ public class Player : MonoBehaviour
     {
         if (other.tag == "Bullet")
         {
-            print("Game Over");
+	    GameManager.state = 2;
         }
     }
 }
